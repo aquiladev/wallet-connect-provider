@@ -49,7 +49,7 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
       name: "truffle-wallet-connect-provider",
       description: "Truffle WalletConnect provider",
       url: "#",
-      icons: [""]
+      icons: ["https://walletconnect.org/walletconnect-logo.png"]
     }
 
     this.chainId = typeof opts.chainId !== "undefined" ? opts.chainId : 1
