@@ -1,0 +1,9 @@
+{
+  "git": {
+    "requireUpstream": true,
+    "tagName": "v${version}"
+  },
+  "github": {
+    "release": true
+  }
+}

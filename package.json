@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Wallet Connect Web3 provider",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "release": "release-it"
+  },
   "keywords": [
     "ethereum",
     "wallet-connect",
@@ -18,6 +20,7 @@
   "dependencies": {
     "@walletconnect/core": "1.0.0-beta.39",
     "@walletconnect/qrcode-modal": "1.0.0-beta.39",
+    "release-it": "12.4.3",
     "web3-provider-engine": "git+https://github.com/trufflesuite/provider-engine.git",
     "ws": "7.2.0"
   }
