@@ -1,4 +1,4 @@
-const crypto = require("crypto")
+const crypto = require('crypto')
 const {
   convertHexToArrayBuffer,
   convertArrayBufferToBuffer,
@@ -8,12 +8,12 @@ const {
   convertHexToBuffer,
   concatBuffers,
   removeHexPrefix
-} = require("@walletconnect/utils");
+} = require('@walletconnect/utils')
 
-const AES_ALGORITHM = "AES-256-CBC"
-const HMAC_ALGORITHM = "SHA256"
+const AES_ALGORITHM = 'AES-256-CBC'
+const HMAC_ALGORITHM = 'SHA256'
 
-function randomBytes(length) {
+function randomBytes (length) {
   return new Promise((resolve, reject) => {
     crypto.randomBytes(length, (error, result) => {
       if (error) {
@@ -24,7 +24,7 @@ function randomBytes(length) {
   })
 }
 
-async function generateKey(length) {
+async function generateKey (length) {
   const _length = (length || 256) / 8
   const buffer = await randomBytes(_length)
   const hex = convertBufferToHex(buffer, true)
@@ -33,16 +33,16 @@ async function generateKey(length) {
   return result
 }
 
-async function createHmac(data, key) {
+async function createHmac (data, key) {
   const hmac = crypto.createHmac(HMAC_ALGORITHM, key)
   hmac.update(data)
-  const hex = hmac.digest("hex")
+  const hex = hmac.digest('hex')
   const result = convertHexToBuffer(hex)
 
   return result
 }
 
-async function verifyHmac(payload, key) {
+async function verifyHmac (payload, key) {
   const cipherText = convertHexToBuffer(payload.data)
   const iv = convertHexToBuffer(payload.iv)
   const hmac = convertHexToBuffer(payload.hmac)
@@ -58,17 +58,17 @@ async function verifyHmac(payload, key) {
   return false
 }
 
-async function aesCbcEncrypt(data, key, iv) {
-  const encoding = "hex"
+async function aesCbcEncrypt (data, key, iv) {
+  const encoding = 'hex'
   const input = data.toString(encoding)
   const cipher = crypto.createCipheriv(AES_ALGORITHM, key, iv)
   let encrypted = cipher.update(input, encoding, encoding)
   encrypted += cipher.final(encoding)
-  const result = new Buffer(encrypted, encoding)
+  const result = Buffer.from(encrypted, encoding)
   return result
 }
 
-async function aesCbcDecrypt(data, key, iv) {
+async function aesCbcDecrypt (data, key, iv) {
   const decipher = crypto.createDecipheriv(AES_ALGORITHM, key, iv)
   let decrypted = decipher.update(data)
   decrypted = concatBuffers(decrypted, decipher.final())
@@ -76,7 +76,7 @@ async function aesCbcDecrypt(data, key, iv) {
   return result
 }
 
-async function encrypt(data, key) {
+async function encrypt (data, key) {
   const _key = convertArrayBufferToBuffer(key)
 
   const ivArrayBuffer = await generateKey(128)
@@ -100,11 +100,11 @@ async function encrypt(data, key) {
   }
 }
 
-async function decrypt(payload, key) {
+async function decrypt (payload, key) {
   const _key = convertArrayBufferToBuffer(key)
 
   if (!_key) {
-    throw new Error("Missing key: required for decryption")
+    throw new Error('Missing key: required for decryption')
   }
 
   const verified = await verifyHmac(payload, _key)

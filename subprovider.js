@@ -1,11 +1,12 @@
-const WalletConnect = require("./WalletConnect");
-const WalletConnectQRCodeModal = require("@walletconnect/qrcode-modal").default;
-const HookedWalletSubprovider = require("web3-provider-engine/subproviders/hooked-wallet");
+const WalletConnect = require('./WalletConnect')
+const WalletConnectQRCodeModal = require('@walletconnect/qrcode-modal').default
+const HookedWalletSubprovider = require('web3-provider-engine/subproviders/hooked-wallet')
 
-WebSocket = require("ws");
+// eslint-disable-next-line
+WebSocket = require('ws')
 
 class WalletConnectSubprovider extends HookedWalletSubprovider {
-  constructor(opts) {
+  constructor (opts) {
     super({
       getAccounts: async (cb) => {
         try {
@@ -14,7 +15,7 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
           if (accounts && accounts.length) {
             cb(null, accounts)
           } else {
-            cb(new Error("Failed to get accounts"))
+            cb(new Error('Failed to get accounts'))
           }
         } catch (error) {
           cb(error)
@@ -24,76 +25,76 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
         return new Promise((resolve) => {
           this.getWalletConnector()
             .then(walletConnector => {
-              return walletConnector.signTransaction(txParams);
+              return walletConnector.signTransaction(txParams)
             })
             .then(result => {
-              resolve(cb(null, result));
+              resolve(cb(null, result))
             })
             .catch(error => {
-              resolve(cb(error));
-            });
-        });
+              resolve(cb(error))
+            })
+        })
       }
     })
 
-    this.qrcode = typeof opts.qrcode === "undefined" || opts.qrcode !== false
+    this.qrcode = typeof opts.qrcode === 'undefined' || opts.qrcode !== false
 
     this.bridge = opts.bridge || null
 
-    if (!this.bridge || typeof this.bridge !== "string") {
-      throw new Error("Missing or Invalid bridge field")
+    if (!this.bridge || typeof this.bridge !== 'string') {
+      throw new Error('Missing or Invalid bridge field')
     }
 
     this._walletConnector = new WalletConnect({ bridge: this.bridge })
     this._walletConnector._clientMeta = {
-      name: "truffle-wallet-connect-provider",
-      description: "Truffle WalletConnect provider",
-      url: "#",
-      icons: ["https://walletconnect.org/walletconnect-logo.png"]
+      name: 'truffle-wallet-connect-provider',
+      description: 'Truffle WalletConnect provider',
+      url: '#',
+      icons: ['https://walletconnect.org/walletconnect-logo.png']
     }
 
-    this.chainId = typeof opts.chainId !== "undefined" ? opts.chainId : 1
+    this.chainId = typeof opts.chainId !== 'undefined' ? opts.chainId : 1
 
     this.isConnecting = false
 
     this.connectCallbacks = []
   }
 
-  set isWalletConnect(value) { }
+  set isWalletConnect (value) { }
 
-  get isWalletConnect() {
+  get isWalletConnect () {
     return true
   }
 
-  set connected(value) { }
+  set connected (value) { }
 
-  get connected() {
+  get connected () {
     return this._walletConnector.connected
   }
 
-  set uri(value) { }
+  set uri (value) { }
 
-  get uri() {
+  get uri () {
     return this._walletConnector.uri
   }
 
-  set accounts(value) { }
+  set accounts (value) { }
 
-  get accounts() {
+  get accounts () {
     return this._walletConnector.accounts
   }
 
-  onConnect(callback) {
+  onConnect (callback) {
     this.connectCallbacks.push(callback)
   }
 
-  triggerConnect(result) {
+  triggerConnect (result) {
     if (this.connectCallbacks && this.connectCallbacks.length) {
       this.connectCallbacks.forEach(callback => callback(result))
     }
   }
 
-  getWalletConnector() {
+  getWalletConnector () {
     return new Promise((resolve, reject) => {
       const walletConnector = this._walletConnector
 
@@ -108,13 +109,13 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
           .createSession(sessionRequestOpions)
           .then(() => {
             if (this.qrcode) {
-              console.log();      // Empty line
+              console.log() // Empty line
               WalletConnectQRCodeModal.open(walletConnector.uri, () => {
-                reject(new Error("User closed WalletConnect modal"))
+                reject(new Error('User closed WalletConnect modal'))
               }, true)
             }
 
-            walletConnector.on("connect", () => {
+            walletConnector.on('connect', () => {
               if (this.qrcode) {
                 WalletConnectQRCodeModal.close(true)
               }
@@ -123,12 +124,12 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
               resolve(walletConnector)
             })
 
-            walletConnector.on("disconnect", () => {
+            walletConnector.on('disconnect', () => {
               if (walletConnector.connected) {
-                walletConnector.killSession();
-                walletConnector.connected = false;
+                walletConnector.killSession()
+                walletConnector.connected = false
               }
-            });
+            })
           })
           .catch(error => {
             this.isConnecting = false
@@ -141,4 +142,4 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
   }
 }
 
-module.exports = WalletConnectSubprovider;
+module.exports = WalletConnectSubprovider
