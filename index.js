@@ -9,7 +9,7 @@ const DefaultOptions = {
   shareNonce: true
 };
 
-const singletonNonceSubProvider = new NonceSubProvider();
+const singletonNonceSubProvider = new NonceSubprovider();
 
 function WalletConnectProvider(opts) {
   const options = { ...DefaultOptions, ...opts };
@@ -28,7 +28,7 @@ function WalletConnectProvider(opts) {
   this.engine.addProvider(new FiltersSubprovider());
   shareNonce
     ? this.engine.addProvider(singletonNonceSubProvider)
-    : this.engine.addProvider(new NonceSubProvider());
+    : this.engine.addProvider(new NonceSubprovider());
 
   this.engine.addProvider(new WalletConnectSubprovider({ bridge }));
   this.engine.addProvider(new RpcSubprovider({ rpcUrl }));

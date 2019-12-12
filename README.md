@@ -14,7 +14,7 @@ npm i @aquiladev/truffle-wallet-connect-provider
 Then you need to setup `truffle-config.js`
 
 ```
-const WalletConnectProvider = require("truffle-wallet-connect-provider");
+const WalletConnectProvider = require("@aquiladev/truffle-wallet-connect-provider");
 
 const provider = new WalletConnectProvider({
     rpcUrl: "https://rinkeby.infura.io/v3/" + process.env.INFURA_API_KEY
