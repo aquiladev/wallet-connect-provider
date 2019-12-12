@@ -8,7 +8,7 @@ Currently smart contract deployment's are commonly executed on the command line 
 
 You need to install npm package
 ```
-npm i https://github.com/aquiladev/truffle-wallet-connect-provider
+npm i @aquiladev/truffle-wallet-connect-provider
 ```
 
 Then you need to setup `truffle-config.js`
@@ -16,13 +16,14 @@ Then you need to setup `truffle-config.js`
 ```
 const WalletConnectProvider = require("truffle-wallet-connect-provider");
 
+const provider = new WalletConnectProvider({
+    rpcUrl: "https://rinkeby.infura.io/v3/" + process.env.INFURA_API_KEY
+});
+
 module.exports = {
     networks: {
         rinkeby: {
-            provider:
-                new WalletConnectProvider({
-                    rpcUrl: "https://rinkeby.infura.io/v3/" + process.env.INFURA_API_KEY
-                }),
+            provider,
             network_id: 4
         }
     }
@@ -32,8 +33,9 @@ module.exports = {
 ## WalletConnectProvider options
 ```
 {
-    bridge: "https://bridge.walletconnect.org"      // wallet-connect bridge (default: https://bridge.walletconnect.org)
-    rpcUrl: "http://localhost:8545"                 // RPC url (Required)
+    rpcUrl: "http://localhost:8545",                // RPC url (Required)
+    bridge: "https://bridge.walletconnect.org",     // wallet-connect bridge (default: https://bridge.walletconnect.org)
+    shareNonce: false                               // shares nonce state across multiple provider instances (default: true)
 }
 ```
 

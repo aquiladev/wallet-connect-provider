@@ -5,12 +5,15 @@ const NonceSubprovider = require("web3-provider-engine/subproviders/nonce-tracke
 const WalletConnectSubprovider = require("./subprovider");
 
 const DefaultOptions = {
-  bridge: "https://bridge.walletconnect.org"
+  bridge: "https://bridge.walletconnect.org",
+  shareNonce: true
 };
+
+const singletonNonceSubProvider = new NonceSubProvider();
 
 function WalletConnectProvider(opts) {
   const options = { ...DefaultOptions, ...opts };
-  const { bridge, rpcUrl } = options;
+  const { bridge, rpcUrl, shareNonce } = options;
 
   if (!bridge) {
     throw new Error(`Bridge URL missing, non-empty string expected, got "${bridge}"`);
@@ -23,7 +26,10 @@ function WalletConnectProvider(opts) {
   this.engine = new ProviderEngine();
 
   this.engine.addProvider(new FiltersSubprovider());
-  this.engine.addProvider(new NonceSubprovider());
+  shareNonce
+    ? this.engine.addProvider(singletonNonceSubProvider)
+    : this.engine.addProvider(new NonceSubProvider());
+
   this.engine.addProvider(new WalletConnectSubprovider({ bridge }));
   this.engine.addProvider(new RpcSubprovider({ rpcUrl }));
 
