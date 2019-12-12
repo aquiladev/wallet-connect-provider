@@ -1,6 +1,6 @@
 {
   "name": "truffle-wallet-connect-provider",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Wallet Connect Web3 provider",
   "main": "index.js",
   "scripts": {
