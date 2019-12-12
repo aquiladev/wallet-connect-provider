@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "beforeStart": "npm run lint"
+  },
   "git": {
     "requireUpstream": true,
     "tagName": "v${version}"

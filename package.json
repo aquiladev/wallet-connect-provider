@@ -4,7 +4,7 @@
   "description": "WalletConnect provider for Truffle smart contract deployment",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint **/*.js",
+    "lint": "eslint --max-warnings 0 **/*.js",
     "release": "release-it"
   },
   "keywords": [
@@ -21,7 +21,6 @@
   "dependencies": {
     "@walletconnect/core": "1.0.0-beta.39",
     "@walletconnect/qrcode-modal": "1.0.0-beta.39",
-    "release-it": "12.4.3",
     "web3-provider-engine": "git+https://github.com/trufflesuite/provider-engine.git",
     "ws": "7.2.0"
   },
@@ -38,6 +37,13 @@
     "eslint-plugin-import": "2.19.1",
     "eslint-plugin-node": "10.0.0",
     "eslint-plugin-promise": "4.2.1",
-    "eslint-plugin-standard": "4.0.1"
+    "eslint-plugin-standard": "4.0.1",
+    "husky": "3.1.0",
+    "release-it": "12.4.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   }
 }
