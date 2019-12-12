@@ -1,7 +1,7 @@
 {
   "name": "@aquiladev/truffle-wallet-connect-provider",
   "version": "0.0.4",
-  "description": "Wallet Connect Web3 provider",
+  "description": "WalletConnect provider for Truffle smart contract deployment",
   "main": "index.js",
   "scripts": {
     "release": "release-it"
@@ -23,5 +23,12 @@
     "release-it": "12.4.3",
     "web3-provider-engine": "git+https://github.com/trufflesuite/provider-engine.git",
     "ws": "7.2.0"
+  },
+  "bugs": {
+    "url": "https://github.com/aquiladev/truffle-wallet-connect-provider/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aquiladev/truffle-wallet-connect-provider.git"
   }
 }
