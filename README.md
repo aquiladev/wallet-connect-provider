@@ -20,12 +20,20 @@ module.exports = {
     networks: {
         rinkeby: {
             provider:
-                new WalletConnectProvider(
-                    "https://bridge.walletconnect.org",
-                    "https://rinkeby.infura.io/v3/" + process.env.INFURA_API_KEY),
+                new WalletConnectProvider({
+                    rpcUrl: "https://rinkeby.infura.io/v3/" + process.env.INFURA_API_KEY
+                }),
             network_id: 4
         }
     }
+}
+```
+
+## WalletConnectProvider options
+```
+{
+    bridge: "https://bridge.walletconnect.org"      // wallet-connect bridge (default: https://bridge.walletconnect.org)
+    rpcUrl: "http://localhost:8545"                 // RPC url (Required)
 }
 ```
 

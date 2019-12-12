@@ -4,21 +4,28 @@ const RpcSubprovider = require("web3-provider-engine/subproviders/rpc");
 const NonceSubprovider = require("web3-provider-engine/subproviders/nonce-tracker");
 const WalletConnectSubprovider = require("./subprovider");
 
-function WalletConnectProvider(bridgeUrl, providerUrl) {
-  if (!bridgeUrl) {
-    throw new Error(`Bridge URL missing, non-empty string expected, got "${bridgeUrl}"`);
+const DefaultOptions = {
+  bridge: "https://bridge.walletconnect.org"
+};
+
+function WalletConnectProvider(opts) {
+  const options = { ...DefaultOptions, ...opts };
+  const { bridge, rpcUrl } = options;
+
+  if (!bridge) {
+    throw new Error(`Bridge URL missing, non-empty string expected, got "${bridge}"`);
   }
 
-  if (!providerUrl) {
-    throw new Error(`Provider URL missing, non-empty string expected, got "${providerUrl}"`);
+  if (!rpcUrl) {
+    throw new Error(`RPC URL missing, non-empty string expected, got "${rpcUrl}"`);
   }
 
   this.engine = new ProviderEngine();
 
   this.engine.addProvider(new FiltersSubprovider());
   this.engine.addProvider(new NonceSubprovider());
-  this.engine.addProvider(new WalletConnectSubprovider({ bridge: bridgeUrl }));
-  this.engine.addProvider(new RpcSubprovider({ rpcUrl: providerUrl }));
+  this.engine.addProvider(new WalletConnectSubprovider({ bridge }));
+  this.engine.addProvider(new RpcSubprovider({ rpcUrl }));
 
   this.engine.start();
 }
