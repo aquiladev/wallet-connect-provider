@@ -1,9 +1,15 @@
-const WalletConnect = require('./WalletConnect')
 const WalletConnectQRCodeModal = require('@walletconnect/qrcode-modal').default
 const HookedWalletSubprovider = require('web3-provider-engine/subproviders/hooked-wallet')
 
+const WalletConnect = require('./walletConnect')
+
 // eslint-disable-next-line
-WebSocket = require('ws')
+const isNode = new Function('try {return this===global;}catch(e){return false;}')
+
+if (isNode()) {
+  // eslint-disable-next-line
+  WebSocket = require('ws')
+}
 
 class WalletConnectSubprovider extends HookedWalletSubprovider {
   constructor (opts) {
@@ -109,15 +115,17 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
           .createSession(sessionRequestOpions)
           .then(() => {
             if (this.qrcode) {
-              console.log() // Empty line
+              if (isNode()) {
+                console.log() // Empty line
+              }
               WalletConnectQRCodeModal.open(walletConnector.uri, () => {
                 reject(new Error('User closed WalletConnect modal'))
-              }, true)
+              }, isNode())
             }
 
             walletConnector.on('connect', () => {
               if (this.qrcode) {
-                WalletConnectQRCodeModal.close(true)
+                WalletConnectQRCodeModal.close(isNode())
               }
               this.isConnecting = false
               this.triggerConnect(walletConnector)

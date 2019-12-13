@@ -46,8 +46,8 @@ In order to use, you need to have a mobile wallet with WalletConnect support.
 For testing purpose, you can use https://test.walletconnect.org/
 
 You need:
-1. open `test.walletconnect.org` on a mobile phone (Safari in case of iOS)
+1. open `https://test.walletconnect.org` on a mobile phone (Safari in case of iOS)
 2. run `truffle migrate --network rinkeby` in your project
-3. connect `test.walletconnect.org` via scanning QR code in a console
-4. approve `truffle-wallet-connect-provider` in `test.walletconnect.org`
-5. sign a transaction in `test.walletconnect.org` when the request appears
+3. connect `https://test.walletconnect.org` via scanning QR code in a console
+4. approve `truffle-wallet-connect-provider` in `https://test.walletconnect.org`
+5. sign a transaction in `https://test.walletconnect.org` when the request appears
