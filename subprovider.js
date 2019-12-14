@@ -53,8 +53,8 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
 
     this._walletConnector = new WalletConnect({ bridge: this.bridge })
     this._walletConnector._clientMeta = {
-      name: 'truffle-wallet-connect-provider',
-      description: 'Truffle WalletConnect provider',
+      name: 'wallet-connect-provider',
+      description: 'WalletConnect provider',
       url: '#',
       icons: ['https://walletconnect.org/walletconnect-logo.png']
     }
