@@ -40,6 +40,48 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
               resolve(cb(error))
             })
         })
+      },
+      signMessage: (params, cb) => {
+        return new Promise((resolve) => {
+          this.getWalletConnector()
+            .then(walletConnector => {
+              return walletConnector.signMessage(params)
+            })
+            .then(result => {
+              resolve(cb(null, result))
+            })
+            .catch(error => {
+              resolve(cb(error))
+            })
+        })
+      },
+      signPersonalMessage: (params, cb) => {
+        return new Promise((resolve) => {
+          this.getWalletConnector()
+            .then(walletConnector => {
+              return walletConnector.signPersonalMessage(params)
+            })
+            .then(result => {
+              resolve(cb(null, result))
+            })
+            .catch(error => {
+              resolve(cb(error))
+            })
+        })
+      },
+      signTypedMessage: (params, cb) => {
+        return new Promise((resolve) => {
+          this.getWalletConnector()
+            .then(walletConnector => {
+              return walletConnector.signTypedData(params)
+            })
+            .then(result => {
+              resolve(cb(null, result))
+            })
+            .catch(error => {
+              resolve(cb(error))
+            })
+        })
       }
     })
 
