@@ -16,6 +16,32 @@ function App () {
     web3.eth.getAccounts()
       .then(x => {
         setAccount(x)
+
+        // const from = x[0]
+
+        // sign message
+        // web3.eth.sign('test', from, (err, sig) => {
+        //   console.log(err, sig)
+        // })
+
+        // sign personal message
+        // web3.eth.personal.sign('test', from, (err, sig) => {
+        //   console.log(err, sig)
+        // })
+
+        // sign typed message
+        // const params = [{
+        //   type: 'string',
+        //   name: 'Message1',
+        //   value: 'one'
+        // }];
+        // web3.currentProvider.sendAsync({
+        //   method: 'eth_signTypedData',
+        //   params: [params, from],
+        //   from: from,
+        // }, (err, sig) => {
+        //   console.log(err, sig)
+        // })
       });
   }
 

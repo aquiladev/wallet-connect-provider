@@ -45,7 +45,8 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
         return new Promise((resolve) => {
           this.getWalletConnector()
             .then(walletConnector => {
-              return walletConnector.signMessage(params)
+              const { from, data } = params
+              return walletConnector.signMessage([from, data])
             })
             .then(result => {
               resolve(cb(null, result))
@@ -59,7 +60,8 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
         return new Promise((resolve) => {
           this.getWalletConnector()
             .then(walletConnector => {
-              return walletConnector.signPersonalMessage(params)
+              const { from, data } = params
+              return walletConnector.signPersonalMessage([data, from])
             })
             .then(result => {
               resolve(cb(null, result))
@@ -73,7 +75,8 @@ class WalletConnectSubprovider extends HookedWalletSubprovider {
         return new Promise((resolve) => {
           this.getWalletConnector()
             .then(walletConnector => {
-              return walletConnector.signTypedData(params)
+              const { from, data } = params
+              return walletConnector.signTypedData([from, data])
             })
             .then(result => {
               resolve(cb(null, result))
