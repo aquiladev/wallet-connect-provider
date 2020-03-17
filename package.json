@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --max-warnings 0 **/*.js",
+    "release-alpha": "release-it --verbose patch --preRelease=alpha --npm.tag=alpha --github.preRelease",
     "release": "release-it"
   },
   "keywords": [
