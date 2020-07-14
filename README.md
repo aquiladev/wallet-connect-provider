@@ -1,4 +1,4 @@
-# WalletConnect provider
+# WalletConnect provider is deprecated, take a look npm package https://www.npmjs.com/package/@walletconnect/truffle-provider
 
 [![npm](https://img.shields.io/npm/v/wallet-connect-provider.svg)](https://www.npmjs.com/package/wallet-connect-provider)
 
